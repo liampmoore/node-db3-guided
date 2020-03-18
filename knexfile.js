@@ -25,17 +25,27 @@ module.exports = {
   local: {
     client: 'pg',
     connection: {
-      port: process.env.PG_PORT,
-      host: process.env.PG_HOST,
-      database: process.env.PG_DATABASE,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD
+        host: 'localhost',
+        user: process.env.PG_USER,
+        password: process.env.PG_PASSWORD,
+        database: 'blog'
     },
     migrations: {
-      directory: './data/migrations'
+        directory: __dirname + '/data/migrations',
     },
     seeds: {
-      directory: './data/seeds'
+        directory: __dirname + '/data/seeds',
     },
-  }
+  },
+
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    migrations: {
+        directory: __dirname + '/data/migrations',
+    },
+    seeds: {
+        directory: __dirname + '/data/seeds',
+    },
+},
 };
