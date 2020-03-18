@@ -4,8 +4,10 @@ const db = require('../data/db-config.js');
 
 const router = express.Router();
 
+const Users = require('./user-model');
+
 router.get('/', (req, res) => {
-  db('users')
+  Users.all()
   .then(users => {
     res.json(users);
   })
@@ -17,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
-  db('users').where({ id })
+  Users.findById(id)
   .then(users => {
     const user = users[0];
 
@@ -48,7 +50,7 @@ router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  db('users').where({ id }).update(changes)
+  Users.update(changes, id)
   .then(count => {
     if (count) {
       res.json({ update: count });
